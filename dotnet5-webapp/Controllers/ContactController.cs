@@ -64,8 +64,17 @@ namespace dotnet5_webapp.Controllers
 
         // DELETE api/<ContactController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public ActionResult<IEnumerable<Contact>> Delete(int id)
         {
+            Contact contact = contacts.FirstOrDefault(c => c.Id == id);
+            if (contact == null)
+            {
+                return NotFound();
+            }
+
+            contacts.Remove(contact);
+
+            return contacts;
         }
     }
 }
