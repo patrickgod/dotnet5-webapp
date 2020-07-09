@@ -13,23 +13,29 @@ namespace dotnet5_webapp.Controllers
     [ApiController]
     public class ContactController : ControllerBase
     {
-        private List<Contact> contacts = new List<Contact> { 
+        private List<Contact> contacts = new List<Contact> {
             new Contact { Id = 1, FirstName = "Peter", LastName = "Parker", NickName = "Spiderman", Place = "New York City" },
             new Contact { Id = 2, FirstName = "Tony", LastName = "Stark", NickName = "Iron Man", Place = "Long Island" }
         };
 
         // GET: api/<ContactController>
         [HttpGet]
-        public IEnumerable<Contact> Get()
+        public ActionResult<IEnumerable<Contact>> Get()
         {
             return contacts;
         }
 
         // GET api/<ContactController>/5
         [HttpGet("{id}")]
-        public Contact Get(int id)
+        public ActionResult<Contact> Get(int id)
         {
-            return contacts.FirstOrDefault(c => c.Id == id);
+            Contact contact = contacts.FirstOrDefault(c => c.Id == id);
+            if (contact == null)
+            {
+                return NotFound(new { Message = "Contact has not been found." });
+            }
+
+            return Ok(contact);
         }
 
         // POST api/<ContactController>
