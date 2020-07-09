@@ -48,8 +48,18 @@ namespace dotnet5_webapp.Controllers
 
         // PUT api/<ContactController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public ActionResult<IEnumerable<Contact>> Put(int id, Contact updatedContact)
         {
+            Contact contact = contacts.FirstOrDefault(c => c.Id == id);
+            if (contact == null)
+            {
+                return NotFound();
+            }
+
+            contact.NickName = updatedContact.NickName;
+            contact.IsDeleted = updatedContact.IsDeleted;
+
+            return contacts;
         }
 
         // DELETE api/<ContactController>/5
