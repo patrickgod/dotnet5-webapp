@@ -27,9 +27,9 @@ namespace dotnet5_webapp.Controllers
 
         // GET api/<ContactController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public Contact Get(int id)
         {
-            return "value";
+            return contacts.FirstOrDefault(c => c.Id == id);
         }
 
         // POST api/<ContactController>
