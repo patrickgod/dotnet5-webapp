@@ -87,7 +87,7 @@ namespace dotnet5_webapp.Controllers
             _context.Contacts.Remove(contact);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok(_context.Contacts);
         }
 
         private bool ContactExists(int id)
